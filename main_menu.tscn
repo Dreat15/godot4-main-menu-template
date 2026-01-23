@@ -39,7 +39,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 32
-text = "Main Menu"
+text = "MENU_MAIN_MENU"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -51,7 +51,7 @@ size_flags_vertical = 6
 [node name="StartGameButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonVBox"]
 layout_mode = 2
 size_flags_vertical = 4
-text = "Start Game"
+text = "MENU_START"
 
 [node name="OptionsButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonVBox"]
 layout_mode = 2
