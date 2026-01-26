@@ -11,7 +11,6 @@ func _on_back_button_pressed() -> void:
 func _on_h_slider_value_changed(value: float) -> void:
 	var rounded = roundi(value)
 	volume_label.text = tr("SETTINGS_AUDIO_VOLUME") + " " + str(rounded) + "%"
-	 
 	AudioServer.set_bus_volume_db(0, value/5)
 	#volume_sample.play()
 	
@@ -19,7 +18,13 @@ func setup_language() -> void:
 	language_language_label.text = tr("SETTINGS_LANGUAGE")
 	var langs = TranslationServer.get_loaded_locales()
 	for lang in langs:
+		print("Adding language option: ", lang)
 		language_option_button.add_item(lang)
+	
+	var index := langs.find(TranslationServer.get_locale())
+	print("Current locale index: ", index)
+	if index != -1:
+		language_option_button.select(index)
 
 func _on_option_button_item_selected(index: int) -> void:
 	var locale:String = language_option_button.get_item_text(index)

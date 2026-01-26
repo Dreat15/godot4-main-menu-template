@@ -3,6 +3,8 @@ extends Control
 signal start_game()
 
 func _ready() -> void:
+	var preferred_language = OS.get_locale_language()
+	TranslationServer.set_locale(preferred_language)
 	update_language()
 	
 func _on_start_game_button_pressed() -> void:
