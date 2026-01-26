@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b5nqceyqw4pqb"]
 
 [ext_resource type="Script" uid="uid://jx172ukmmfsa" path="res://settings_menu.gd" id="1_ufg0w"]
-[ext_resource type="AudioStream" uid="uid://bnbada8q7r5yi" path="res://mixkit-footsteps-on-tall-grass-532.wav" id="2_0cmel"]
+[ext_resource type="AudioStream" uid="uid://bnbada8q7r5yi" path="res://sounds/mixkit-footsteps-on-tall-grass-532.wav" id="2_0cmel"]
 
 [node name="SettingsMenu" type="Control"]
 layout_mode = 3
@@ -68,7 +68,7 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="Keyboard" type="VBoxContainer" parent="Background/VBoxContainer/TabContainer"]
+[node name="Controls" type="VBoxContainer" parent="Background/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2

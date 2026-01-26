@@ -1,9 +1,11 @@
 keys,en,de
+BACK,Back,Zurück
 MENU_MAIN_MENU,Main Menu,Hauptmenü
 MENU_START,Start Game,Starte Spiel
 MENU_OPTIONS,Options,Optionen
 MENU_QUIT,Quit,Beenden
 SETTINGS_AUDIO,Audio,Audio
+SETTINGS_AUDIO_VOLUME,Volume,Lautstärke
 SETTINGS_VIDEO,Video,Video
-SETTINGS_KEYBOARD,Keyboard,Tastatur
+SETTINGS_CONTROLS,Controls,Tastatur
 SETTINGS_LANGUAGE,Language,Sprache

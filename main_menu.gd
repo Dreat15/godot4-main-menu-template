@@ -2,14 +2,8 @@ extends Control
 
 signal start_game()
 
-@onready var main_menu_label:Label = $MarginContainer/VBoxContainer/Label
-@onready var settings_scene:PackedScene = load("res://settings_menu.tscn")
-
 func _ready() -> void:
-	#main_menu_label.text = tr("MENU_MAIN_MENU")
-	#$MarginContainer/VBoxContainer/ButtonVBox/StartGameButton.text = tr("MENU_START")
-	$MarginContainer/VBoxContainer/ButtonVBox/OptionsButton.text = tr("MENU_OPTIONS")
-	$MarginContainer/VBoxContainer/ButtonVBox/QuitButton.text = tr("MENU_QUIT")
+	update_language()
 	
 func _on_start_game_button_pressed() -> void:
 	start_game.emit()
@@ -20,3 +14,17 @@ func _on_quit_button_pressed() -> void:
 
 func _on_options_button_pressed() -> void:
 	get_tree().current_scene.add_child(settings_scene.instantiate())
+
+func update_language() -> void:
+	main_menu_label.text = tr("MENU_MAIN_MENU")
+	start_game_button.text = tr("MENU_START")
+	options_button.text = tr("MENU_OPTIONS")
+	quit_button.text = tr("MENU_QUIT")
+
+
+@onready var main_menu_label:Label = $MarginContainer/VBoxContainer/Label
+@onready var start_game_button:Button = $MarginContainer/VBoxContainer/ButtonVBox/StartGameButton
+@onready var options_button:Button = $MarginContainer/VBoxContainer/ButtonVBox/OptionsButton
+@onready var quit_button:Button = $MarginContainer/VBoxContainer/ButtonVBox/QuitButton
+
+@onready var settings_scene:PackedScene = load("res://settings_menu.tscn")
