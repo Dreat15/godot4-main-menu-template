@@ -52,6 +52,7 @@ func save_settings() -> void:
 	#audio
 	config.set_value("audio", "volume", volume_slider.value)
 	#video
+	config.set_value("video", "vsync", v_sync_option_button.get_selected_id())
 	#controls
 	#language
 	config.set_value("language", "locale", TranslationServer.get_locale())
@@ -70,10 +71,27 @@ func load_settings() -> void:
 	volume_slider.value = volume
 	AudioServer.set_bus_volume_db(0, volume/5)
 	#video
+	var vsync = config.get_value("video", "vsync", 2)
+	v_sync_option_button.select(vsync)
+	if vsync == 0: # Disabled (default)
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+	elif vsync == 1: # Adaptive
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
+	elif vsync == 2: # Enabled
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 	#controls
 	#language
 	var locale = config.get_value("language", "locale", OS.get_locale_language())
 	TranslationServer.set_locale(locale)
+
+func _on_v_sync_item_selected(index: int) -> void:
+	if index == 0: # Disabled (default)
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+	elif index == 1: # Adaptive
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
+	elif index == 2: # Enabled
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+
 
 signal settings_closed() 
 
@@ -85,7 +103,7 @@ signal settings_closed()
 
 #video
 @onready var video_tab:VBoxContainer = $Background/VBoxContainer/TabContainer/Video
-
+@onready var v_sync_option_button:OptionButton = $Background/VBoxContainer/TabContainer/Video/VSync
 #controls
 @onready var controls_tab:VBoxContainer = $Background/VBoxContainer/TabContainer/Controls
 
@@ -95,3 +113,4 @@ signal settings_closed()
 @onready var language_language_label:Label = $Background/VBoxContainer/TabContainer/Language/VBoxContainer/Label
 
 @onready var back_button:Button = $Background/VBoxContainer/BackButton
+

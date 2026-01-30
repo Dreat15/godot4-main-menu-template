@@ -38,7 +38,6 @@ func load_settings() -> void:
 	var locale = config.get_value("language", "locale", OS.get_locale_language())
 	TranslationServer.set_locale(locale)
 
-
 @onready var main_menu_label:Label = $MarginContainer/VBoxContainer/Label
 @onready var start_game_button:Button = $MarginContainer/VBoxContainer/ButtonVBox/StartGameButton
 @onready var options_button:Button = $MarginContainer/VBoxContainer/ButtonVBox/OptionsButton
