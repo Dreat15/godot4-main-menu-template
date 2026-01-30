@@ -43,4 +43,4 @@ func load_settings() -> void:
 @onready var options_button:Button = $MarginContainer/VBoxContainer/ButtonVBox/OptionsButton
 @onready var quit_button:Button = $MarginContainer/VBoxContainer/ButtonVBox/QuitButton
 
-@onready var settings_scene:PackedScene = load("res://settings_menu.tscn")
+@onready var settings_scene:PackedScene = load("res://settings/settings_menu.tscn")

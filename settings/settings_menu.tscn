@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b5nqceyqw4pqb"]
 
-[ext_resource type="Script" uid="uid://jx172ukmmfsa" path="res://settings_menu.gd" id="1_ufg0w"]
+[ext_resource type="Script" uid="uid://jx172ukmmfsa" path="res://settings/settings_menu.gd" id="1_ufg0w"]
 [ext_resource type="AudioStream" uid="uid://bnbada8q7r5yi" path="res://sounds/mixkit-footsteps-on-tall-grass-532.wav" id="2_0cmel"]
 
 [node name="SettingsMenu" type="Control"]
