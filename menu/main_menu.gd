@@ -3,7 +3,6 @@ extends Control
 signal start_game()
 
 func _ready() -> void:
-	load_settings()
 	update_language()
 	
 func _on_start_game_button_pressed() -> void:
@@ -19,7 +18,6 @@ func _on_options_button_pressed() -> void:
 	get_tree().current_scene.add_child(settings)
 
 func _on_settings_closed() -> void:
-	load_settings()
 	update_language()
 
 func update_language() -> void:
@@ -28,15 +26,6 @@ func update_language() -> void:
 	options_button.text = tr("MENU_OPTIONS")
 	quit_button.text = tr("MENU_QUIT")
 
-func load_settings() -> void:
-	var config = ConfigFile.new()
-	var err = config.load("user://settings.cfg")
-
-	if err != OK:
-		return
-
-	var locale = config.get_value("language", "locale", OS.get_locale_language())
-	TranslationServer.set_locale(locale)
 
 @onready var main_menu_label:Label = $MarginContainer/VBoxContainer/Label
 @onready var start_game_button:Button = $MarginContainer/VBoxContainer/ButtonVBox/StartGameButton

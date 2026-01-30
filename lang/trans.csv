@@ -7,5 +7,6 @@ MENU_QUIT,Quit,Beenden
 SETTINGS_AUDIO,Audio,Audio
 SETTINGS_AUDIO_VOLUME,Volume,Lautstärke
 SETTINGS_VIDEO,Video,Video
+SETTINGS_VIDEO_FULLSCREEN,Fullscreen,Vollbild
 SETTINGS_CONTROLS,Controls,Tastatur
 SETTINGS_LANGUAGE,Language,Sprache

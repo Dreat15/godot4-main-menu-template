@@ -14,6 +14,10 @@ config/name="MainMenu"
 run/main_scene="uid://b7rt4mwk31wbn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 
+[autoload]
+
+GlobalSettings="*res://autoload/global_settings.gd"
+
 [display]
 
 window/size/viewport_width=1920

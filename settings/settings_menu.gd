@@ -20,11 +20,9 @@ func setup_language() -> void:
 	language_language_label.text = tr("SETTINGS_LANGUAGE")
 	var langs = TranslationServer.get_loaded_locales()
 	for lang in langs:
-		print("Adding language option: ", lang)
 		language_option_button.add_item(lang)
 	
 	var index := langs.find(TranslationServer.get_locale())
-	print("Current locale index: ", index)
 	if index != -1:
 		language_option_button.select(index)
 
@@ -39,6 +37,7 @@ func update_language():
 	volume_label.text = tr("SETTINGS_AUDIO_VOLUME") + " " + str(roundi(volume_slider.value)) + "%"
 	#video
 	video_tab.name = tr("SETTINGS_VIDEO")
+	fullscreen_label.text = tr("SETTINGS_VIDEO_FULLSCREEN")
 	#controls
 	controls_tab.name = tr("SETTINGS_CONTROLS")
 	#language
@@ -53,36 +52,25 @@ func save_settings() -> void:
 	config.set_value("audio", "volume", volume_slider.value)
 	#video
 	config.set_value("video", "vsync", v_sync_option_button.get_selected_id())
+	config.set_value("video", "fullscreen", fullscreen_option_button.get_selected_id() == 1)
 	#controls
 	#language
 	config.set_value("language", "locale", TranslationServer.get_locale())
 	config.save("user://settings.cfg")
 
 func load_settings() -> void:
-	var config = ConfigFile.new()
-	var err = config.load("user://settings.cfg")
-
-	if err != OK:
-		return
-
-	print("Loaded settings from file.")
 	#audio
-	var volume = config.get_value("audio", "volume", 100)
+	var volume = AudioServer.get_bus_volume_db(0) * 5
 	volume_slider.value = volume
-	AudioServer.set_bus_volume_db(0, volume/5)
 	#video
-	var vsync = config.get_value("video", "vsync", 2)
+	var vsync = DisplayServer.window_get_vsync_mode()
 	v_sync_option_button.select(vsync)
-	if vsync == 0: # Disabled (default)
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
-	elif vsync == 1: # Adaptive
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
-	elif vsync == 2: # Enabled
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+	var window_mode =get_tree().root.get_mode()
+	fullscreen_option_button.select(window_mode == Window.MODE_FULLSCREEN)
 	#controls
 	#language
-	var locale = config.get_value("language", "locale", OS.get_locale_language())
-	TranslationServer.set_locale(locale)
+	var locale = TranslationServer.get_locale()
+	language_option_button.select(TranslationServer.get_loaded_locales().find((locale)))
 
 func _on_v_sync_item_selected(index: int) -> void:
 	if index == 0: # Disabled (default)
@@ -92,6 +80,11 @@ func _on_v_sync_item_selected(index: int) -> void:
 	elif index == 2: # Enabled
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 
+func _on_fullscreen_item_selected(index: int) -> void:
+	if(index == 1):
+		get_tree().root.set_mode(Window.MODE_FULLSCREEN)
+	else:
+		get_tree().root.set_mode(Window.MODE_WINDOWED)
 
 signal settings_closed() 
 
@@ -104,6 +97,8 @@ signal settings_closed()
 #video
 @onready var video_tab:VBoxContainer = $Background/VBoxContainer/TabContainer/Video
 @onready var v_sync_option_button:OptionButton = $Background/VBoxContainer/TabContainer/Video/VSync
+@onready var fullscreen_label:Label = $Background/VBoxContainer/TabContainer/Video/FullscreenLabel
+@onready var fullscreen_option_button:OptionButton = $Background/VBoxContainer/TabContainer/Video/Fullscreen
 #controls
 @onready var controls_tab:VBoxContainer = $Background/VBoxContainer/TabContainer/Controls
 
@@ -113,4 +108,3 @@ signal settings_closed()
 @onready var language_language_label:Label = $Background/VBoxContainer/TabContainer/Language/VBoxContainer/Label
 
 @onready var back_button:Button = $Background/VBoxContainer/BackButton
-
