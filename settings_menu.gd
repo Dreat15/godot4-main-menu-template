@@ -1,11 +1,13 @@
-extends Control
+class_name  SettingsMenu extends Control
 
 func _ready() -> void:
+	load_settings()
 	update_language()
 	setup_language()
-	volume_slider.value = 100
 
 func _on_back_button_pressed() -> void:
+	save_settings()
+	settings_closed.emit()
 	queue_free()
 
 func _on_h_slider_value_changed(value: float) -> void:
@@ -34,7 +36,7 @@ func _on_option_button_item_selected(index: int) -> void:
 func update_language():
 	#audio
 	audio_tab.name = tr("SETTINGS_AUDIO")	
-	volume_label.text = tr("SETTINGS_AUDIO_VOLUME") #add value when implemented
+	volume_label.text = tr("SETTINGS_AUDIO_VOLUME") + " " + str(roundi(volume_slider.value)) + "%"
 	#video
 	video_tab.name = tr("SETTINGS_VIDEO")
 	#controls
@@ -44,6 +46,36 @@ func update_language():
 	language_language_label.text = tr("SETTINGS_LANGUAGE")
 	back_button.text = tr("BACK")
 
+func save_settings() -> void:
+	var config = ConfigFile.new()
+
+	#audio
+	config.set_value("audio", "volume", volume_slider.value)
+	#video
+	#controls
+	#language
+	config.set_value("language", "locale", TranslationServer.get_locale())
+	config.save("user://settings.cfg")
+
+func load_settings() -> void:
+	var config = ConfigFile.new()
+	var err = config.load("user://settings.cfg")
+
+	if err != OK:
+		return
+
+	print("Loaded settings from file.")
+	#audio
+	var volume = config.get_value("audio", "volume", 100)
+	volume_slider.value = volume
+	AudioServer.set_bus_volume_db(0, volume/5)
+	#video
+	#controls
+	#language
+	var locale = config.get_value("language", "locale", OS.get_locale_language())
+	TranslationServer.set_locale(locale)
+
+signal settings_closed() 
 
 #audio
 @onready var audio_tab:MarginContainer = $Background/VBoxContainer/TabContainer/Audio
